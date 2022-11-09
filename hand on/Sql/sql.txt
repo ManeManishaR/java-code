@@ -1,0 +1,186 @@
+Enter password: ******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 18
+Server version: 8.0.31 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+mysql> create database class2551;
+Query OK, 1 row affected (0.08 sec)
+mysql> use Anudip2551;
+Database changed
+mysql> create table student(
+    -> id int not null auto_increment,
+    -> name varchar(20) not null,
+    -> age int not null,
+    -> address varchar(20),
+    -> primary key(id)
+    -> );
+Query OK, 0 rows affected (0.32 sec)
+mysql> show tables;
++----------------------+
+| Tables_in_anudip2551 |
++----------------------+
+| student              |
++----------------------+
+1 row in set (0.09 sec)
+
+mysql> desc student;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| id      | int         | NO   | PRI | NULL    | auto_increment |
+| name    | varchar(20) | NO   |     | NULL    |                |
+| age     | int         | NO   |     | NULL    |                |
+| address | varchar(20) | YES  |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+4 rows in set (0.07 sec)
+
+mysql> insert into student(id,name,age,address)values(1,Manisha,24,Aurangabad);
+ERROR 1054 (42S22): Unknown column 'Manisha' in 'field list'
+mysql> insert into student(id,name,age,address)values(1,'Manisha',24,Aurangabad);
+ERROR 1054 (42S22): Unknown column 'Aurangabad' in 'field list'
+mysql> insert into student(id,name,age,address)values(1,'Manisha',24,'Aurangabad');
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into student(id,name,age,address)values(2,'vanisha',23,'Aurangabad');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into student(id,name,age,address)values(3,'Nisha',33,'Pune');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select* from student;
++----+---------+-----+------------+
+| id | name    | age | address    |
++----+---------+-----+------------+
+|  1 | Manisha |  24 | Aurangabad |
+|  2 | vanisha |  23 | Aurangabad |
+|  3 | Nisha   |  33 | Pune       |
++----+---------+-----+------------+
+3 rows in set (0.00 sec)
+
+mysql> update student set name='Pooja'where id 2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '2' at line 1
+mysql> update student set name='Pooja'where id=2;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select* from student;
++----+---------+-----+------------+
+| id | name    | age | address    |
++----+---------+-----+------------+
+|  1 | Manisha |  24 | Aurangabad |
+|  2 | Pooja   |  23 | Aurangabad |
+|  3 | Nisha   |  33 | Pune       |
++----+---------+-----+------------+
+3 rows in set (0.00 sec)
+mysql> alter table student add  mo_no int not null;
+Query OK, 0 rows affected (0.19 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select* from student;
++----+---------+-----+------------+-------+
+| id | name    | age | address    | mo_no |
++----+---------+-----+------------+-------+
+|  1 | Manisha |  24 | Aurangabad |     0 |
+|  2 | Pooja   |  23 | Aurangabad |     0 |
+|  3 | Nisha   |  33 | Pune       |     0 |
++----+---------+-----+------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> update student set address='xyz'where id=1;
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select* from student;
++----+---------+-----+------------+-------+
+| id | name    | age | address    | mo_no |
++----+---------+-----+------------+-------+
+|  1 | Manisha |  24 | xyz        |     0 |
+|  2 | Pooja   |  23 | Aurangabad |     0 |
+|  3 | Nisha   |  33 | Pune       |     0 |
++----+---------+-----+------------+-------+
+3 rows in set (0.00 sec)
+
+mysql> update student set address='abc'where id=2;
+Query OK, 1 row affected (0.36 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select* from student;
++----+---------+-----+---------+-------+
+| id | name    | age | address | mo_no |
++----+---------+-----+---------+-------+
+|  1 | Manisha |  24 | xyz     |     0 |
+|  2 | Pooja   |  23 | abc     |     0 |
+|  3 | Nisha   |  33 | Pune    |     0 |
++----+---------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table student modify address varchar(20)null;
+Query OK, 0 rows affected (0.17 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++---------+-------------+------+-----+---------+----------------+
+| Field   | Type        | Null | Key | Default | Extra          |
++---------+-------------+------+-----+---------+----------------+
+| id      | int         | NO   | PRI | NULL    | auto_increment |
+| name    | varchar(20) | NO   |     | NULL    |                |
+| age     | int         | NO   |     | NULL    |                |
+| address | varchar(20) | YES  |     | NULL    |                |
+| mo_no   | int         | NO   |     | NULL    |                |
++---------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table student drop column address;
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int         | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(20) | NO   |     | NULL    |                |
+| age   | int         | NO   |     | NULL    |                |
+| mo_no | int         | NO   |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+mysql> alter table student rename to studentrecord;
+Query OK, 0 rows affected (0.40 sec)
+
+mysql> desc studentrecord;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int         | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(20) | NO   |     | NULL    |                |
+| age   | int         | NO   |     | NULL    |                |
+| mo_no | int         | NO   |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> delete from studentrecord where id=2;
+Query OK, 1 row affected (0.10 sec)
+
+mysql> select*from studentrecord;
++----+---------+-----+-------+
+| id | name    | age | mo_no |
++----+---------+-----+-------+
+|  1 | Manisha |  24 |     0 |
+|  3 | Nisha   |  33 |     0 |
++----+---------+-----+-------+
+2 rows in set (0.00 sec)
+
+mysql> drop table studentrecord;
+Query OK, 0 rows affected (0.15 sec)
+
+mysql> select*from studentrecord;
+ERROR 1146 (42S02): Table 'anudip2551.studentrecord' doesn't exist
+mysql> show tables;
+Empty set (0.00 sec)
