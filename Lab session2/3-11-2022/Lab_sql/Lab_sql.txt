@@ -1,0 +1,428 @@
+Enter password: ******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 21
+Server version: 8.0.31 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database Lab1;
+Query OK, 1 row affected (0.07 sec)
+
+mysql> create table student;
+ERROR 1046 (3D000): No database selected
+mysql> use Lab1;
+Database changed
+mysql> create table student;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> use Lab;
+Database changed
+mysql> create table student(
+    -> id int not null,
+    -> name varchar(20),
+    -> address varchar(30) not null,
+    -> standard int not null,
+    -> primary key (id));
+Query OK, 0 rows affected (0.19 sec)
+
+mysql> create table studentmark(
+    -> m_id int not null,
+    -> subject varchar(30) not null,
+    -> grade varchar(20) not null,
+    -> performance varchar(20) not null,
+    -> standard int not null,
+    -> primary key (id));
+ERROR 1072 (42000): Key column 'id' doesn't exist in table
+mysql> create table student(
+    -> id int not null,
+    -> m_id int not null,
+    -> subject varchar(30) not null,
+    -> grade varchar(20) not null,
+    -> performance varchar(20) not null,
+    -> standard int not null,
+    -> primary key (m_id));
+ERROR 1050 (42S01): Table 'student' already exists
+mysql> create table studentmark(
+    -> m_id int not null,
+    -> subject varchar(30) not null,
+    -> grade varchar(20) not null,
+    -> performance varchar(20) not null,
+    -> standard int not null,
+    -> primary key (m_id));
+Query OK, 0 rows affected (0.16 sec)
+mysql> desc student;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| id       | int         | NO   | PRI | NULL    |       |
+| name     | varchar(20) | YES  |     | NULL    |       |
+| address  | varchar(30) | NO   |     | NULL    |       |
+| standard | int         | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> decs studentmark;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'decs studentmark' at line 1
+mysql> desc studentmark;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| m_id        | int         | NO   | PRI | NULL    |       |
+| subject     | varchar(30) | NO   |     | NULL    |       |
+| grade       | varchar(20) | NO   |     | NULL    |       |
+| performance | varchar(20) | NO   |     | NULL    |       |
+| standard    | int         | NO   |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> aiter table student add pin int not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'aiter table student add pin int not null' at line 1
+mysql> aiter table student add gender varchar(20) not null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'aiter table student add gender varchar(20) not null' at line 1
+mysql> desc student;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| id       | int         | NO   | PRI | NULL    |       |
+| name     | varchar(20) | YES  |     | NULL    |       |
+| address  | varchar(30) | NO   |     | NULL    |       |
+| standard | int         | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table student add Gender varchar(20) not null;
+Query OK, 0 rows affected (0.11 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| id       | int         | NO   | PRI | NULL    |       |
+| name     | varchar(20) | YES  |     | NULL    |       |
+| address  | varchar(30) | NO   |     | NULL    |       |
+| standard | int         | NO   |     | NULL    |       |
+| Gender   | varchar(20) | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> desc studentmark;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| m_id        | int         | NO   | PRI | NULL    |       |
+| subject     | varchar(30) | NO   |     | NULL    |       |
+| grade       | varchar(20) | NO   |     | NULL    |       |
+| performance | varchar(20) | NO   |     | NULL    |       |
+| standard    | int         | NO   |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select studentmark.m_id,studentmark.subject.name from studentmark
+    -> INNER JOIN studentmark
+    -> ON studentmark.m_id=student.id;
+ERROR 1066 (42000): Not unique table/alias: 'studentmark'
+mysql> select studentmark.m_id,studentmark.subject.name from studentmark
+    -> INNER JOIN studentmark
+    -> ON studentmark.m_id=student.id;
+ERROR 1066 (42000): Not unique table/alias: 'studentmark'
+mysql>  alter column  id rename to s_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'column  id rename to s_id' at line 1
+mysql>  alter table student rename column  id to s_id;
+Query OK, 0 rows affected (0.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| s_id     | int         | NO   | PRI | NULL    |       |
+| name     | varchar(20) | YES  |     | NULL    |       |
+| address  | varchar(30) | NO   |     | NULL    |       |
+| standard | int         | NO   |     | NULL    |       |
+| Gender   | varchar(20) | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> desc studentmark;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| m_id        | int         | NO   | PRI | NULL    |       |
+| subject     | varchar(30) | NO   |     | NULL    |       |
+| grade       | varchar(20) | NO   |     | NULL    |       |
+| performance | varchar(20) | NO   |     | NULL    |       |
+| standard    | int         | NO   |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select studentmark.subject,studentmark.grade,student.standrad from studentmark
+    -> INNER JOIN studentmark
+    -> ON studentmark.m_id=student.s_id;
+ERROR 1066 (42000): Not unique table/alias: 'studentmark'
+mysql> desc student;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| s_id     | int         | NO   | PRI | NULL    |       |
+| name     | varchar(20) | YES  |     | NULL    |       |
+| address  | varchar(30) | NO   |     | NULL    |       |
+| standard | int         | NO   |     | NULL    |       |
+| Gender   | varchar(20) | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into student values (1,'mina','Pune',12,'F');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into student values (2,'Amina','Mumbai',11,'F');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into student values (3,'Amu','Mumbai',21,'M');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> select*from student;
++------+-------+---------+----------+--------+
+| s_id | name  | address | standard | Gender |
++------+-------+---------+----------+--------+
+|    1 | mina  | Pune    |       12 | F      |
+|    2 | Amina | Mumbai  |       11 | F      |
+|    3 | Amu   | Mumbai  |       21 | M      |
++------+-------+---------+----------+--------+
+3 rows in set (0.00 sec)
+
+mysql> desc studentmark;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| m_id        | int         | NO   | PRI | NULL    |       |
+| subject     | varchar(30) | NO   |     | NULL    |       |
+| grade       | varchar(20) | NO   |     | NULL    |       |
+| performance | varchar(20) | NO   |     | NULL    |       |
+| standard    | int         | NO   |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql>  alter table studentmark rename column  name to s_name;
+ERROR 1054 (42S22): Unknown column 'name' in 'studentmark'
+mysql>  alter table studentmark rename column  subject to s_name;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc studentmark;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| m_id        | int         | NO   | PRI | NULL    |       |
+| s_name      | varchar(30) | NO   |     | NULL    |       |
+| grade       | varchar(20) | NO   |     | NULL    |       |
+| performance | varchar(20) | NO   |     | NULL    |       |
+| standard    | int         | NO   |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into studentmark values (1,'Amu','A','GOOD',12);
+Query OK, 1 row affected (0.35 sec)
+
+mysql> insert into studentmark values (2,'Samu','B','Excellent',12);
+Query OK, 1 row affected (0.37 sec)
+
+mysql> insert into studentmark values (3,'Sam','B','nice',11);
+Query OK, 1 row affected (0.38 sec)
+
+mysql> desc student;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| s_id     | int         | NO   | PRI | NULL    |       |
+| name     | varchar(20) | YES  |     | NULL    |       |
+| address  | varchar(30) | NO   |     | NULL    |       |
+| standard | int         | NO   |     | NULL    |       |
+| Gender   | varchar(20) | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> desc studentmark;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| m_id        | int         | NO   | PRI | NULL    |       |
+| s_name      | varchar(30) | NO   |     | NULL    |       |
+| grade       | varchar(20) | NO   |     | NULL    |       |
+| performance | varchar(20) | NO   |     | NULL    |       |
+| standard    | int         | NO   |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select studentmark.s_name,studentmark.grade,student.name from studentmark;
+ERROR 1054 (42S22): Unknown column 'student.name' in 'field list'
+mysql>  alter table student rename column name to m_name;
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| s_id     | int         | NO   | PRI | NULL    |       |
+| m_name   | varchar(20) | YES  |     | NULL    |       |
+| address  | varchar(30) | NO   |     | NULL    |       |
+| standard | int         | NO   |     | NULL    |       |
+| Gender   | varchar(20) | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select studentmark.s_name,studentmark.grade,student.m_name from studentmark;
+ERROR 1054 (42S22): Unknown column 'student.m_name' in 'field list'
+mysql> select studentmark.s_name,studentmark.grade,student.m_name from studentmark
+    -> INNER JOIN studentmark
+    -> ON studentmark.m_id=student.id;
+ERROR 1066 (42000): Not unique table/alias: 'studentmark'
+mysql> select studentmark.s_name,studentmark.grade,student.m_name from studentmark
+    -> INNER JOIN studentmark
+    -> ON studentmark.m_id=student.s_id;
+ERROR 1066 (42000): Not unique table/alias: 'studentmark'
+mysql> select studentmark.s_name,studentmark.grade,student.m_name from studentmark
+    -> INNER JOIN student
+    -> ON studentmark.m_id=student.s_id;
++--------+-------+--------+
+| s_name | grade | m_name |
++--------+-------+--------+
+| Amu    | A     | mina   |
+| Samu   | B     | Amina  |
+| Sam    | B     | Amu    |
++--------+-------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select studentmark.s_name,studentmark.grade,student.m_name from studentmark
+    -> LEFT JOIN student
+    -> ON studentmark.m_id=student.s_id;
++--------+-------+--------+
+| s_name | grade | m_name |
++--------+-------+--------+
+| Amu    | A     | mina   |
+| Samu   | B     | Amina  |
+| Sam    | B     | Amu    |
++--------+-------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select studentmark.s_name,studentmark.grade,student.m_name from studentmark
+    -> RIGHT JOIN student
+    -> ON studentmark.m_id=student.s_id;
++--------+-------+--------+
+| s_name | grade | m_name |
++--------+-------+--------+
+| Amu    | A     | mina   |
+| Samu   | B     | Amina  |
+| Sam    | B     | Amu    |
++--------+-------+--------+
+3 rows in set (0.00 sec)
+
+mysql> insert into studentmark value (4,'naina','c','good',12);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into studentmark value (5,'nira','c','good',11);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> select*from studentmark;
++------+--------+-------+-------------+----------+
+| m_id | s_name | grade | performance | standard |
++------+--------+-------+-------------+----------+
+|    1 | Amu    | A     | GOOD        |       12 |
+|    2 | Samu   | B     | Excellent   |       12 |
+|    3 | Sam    | B     | nice        |       11 |
+|    4 | naina  | c     | good        |       12 |
+|    5 | nira   | c     | good        |       11 |
++------+--------+-------+-------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select studentmark.s_name,studentmark.grade,student.m_name from studentmark
+    -> RIGHT JOIN student
+    -> ON studentmark.m_id=student.s_id;
++--------+-------+--------+
+| s_name | grade | m_name |
++--------+-------+--------+
+| Amu    | A     | mina   |
+| Samu   | B     | Amina  |
+| Sam    | B     | Amu    |
++--------+-------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select*from student;
++------+--------+---------+----------+--------+
+| s_id | m_name | address | standard | Gender |
++------+--------+---------+----------+--------+
+|    1 | mina   | Pune    |       12 | F      |
+|    2 | Amina  | Mumbai  |       11 | F      |
+|    3 | Amu    | Mumbai  |       21 | M      |
++------+--------+---------+----------+--------+
+3 rows in set (0.00 sec)
+
+mysql> insert into student value (4,'Anira','c','good',11);
+ERROR 1366 (HY000): Incorrect integer value: 'good' for column 'standard' at row 1
+mysql> insert into student value (4,'Anira','beed',11,'F');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into student value (5,'riya','nanded',11,'M');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> select*from student;
++------+--------+---------+----------+--------+
+| s_id | m_name | address | standard | Gender |
++------+--------+---------+----------+--------+
+|    1 | mina   | Pune    |       12 | F      |
+|    2 | Amina  | Mumbai  |       11 | F      |
+|    3 | Amu    | Mumbai  |       21 | M      |
+|    4 | Anira  | beed    |       11 | F      |
+|    5 | riya   | nanded  |       11 | M      |
++------+--------+---------+----------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select studentmark.s_name,studentmark.grade,student.m_name from studentmark
+    -> RIGHT JOIN student
+    -> ON studentmark.m_id=student.s_id;
++--------+-------+--------+
+| s_name | grade | m_name |
++--------+-------+--------+
+| Amu    | A     | mina   |
+| Samu   | B     | Amina  |
+| Sam    | B     | Amu    |
+| naina  | c     | Anira  |
+| nira   | c     | riya   |
++--------+-------+--------+
+5 rows in set (0.00 sec)
+mysql> select studentmark.s_name,studentmark.grade,student.m_name from studentmark
+    -> FULL JOIN student
+    -> ON studentmark.m_id=student.s_id;
+ERROR 1054 (42S22): Unknown column 'studentmark.s_name' in 'field list'
+mysql> desc studentmark;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| m_id        | int         | NO   | PRI | NULL    |       |
+| s_name      | varchar(30) | NO   |     | NULL    |       |
+| grade       | varchar(20) | NO   |     | NULL    |       |
+| performance | varchar(20) | NO   |     | NULL    |       |
+| standard    | int         | NO   |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+mysql> select studentmark.s_name,studentmark.grade,student.m_name from studentmark
+    -> CROSS Join student
+    -> ON studentmark.m_id=student.s_id;
++--------+-------+--------+
+| s_name | grade | m_name |
++--------+-------+--------+
+| Amu    | A     | mina   |
+| Samu   | B     | Amina  |
+| Sam    | B     | Amu    |
+| naina  | c     | Anira  |
+| nira   | c     | riya   |
++--------+-------+--------+
+5 rows in set (0.00 sec)
+
+mysql>
