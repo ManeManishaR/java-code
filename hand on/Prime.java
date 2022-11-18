@@ -1,34 +1,32 @@
-
-
-class Prime
- { 
-     
-  public static  void main(String[] args)
+ 
+   class Prime
+       {
+	public static void main(String[]args)
 	{
+	int i =2, n = 20;
+      for (int i =2;  i<= 20; i++)
+	if (isPrime (i));
 
-	int n=1;
-         
+        {
+	if (n < 2)
 
-   //cheak prime or not
+	return false;
+
+	for (int n =20;  n<= end; n++)
+	{
+	if(n%i==0);
+	return false;
+	}
+     return true;
+  
+	
+
+    	
+      
+      
+	     
+       
+
 
        
-		java.util.Scanner sc = new java.util.Scanner(System.in);
-
-		System.out.println("Enter a no: ");
-
-		int no = sc.nextInt();
-
-		
-
-	if(n<=0)
- {
-		System.out.println( n+" This is prime ");
-
-		}
-              else
-		{
-		System.out.println(n+" This is no prime ");
-		}
-
-	}
-}
+     
